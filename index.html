@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA GLOIRE DE DIEU - Répertoire Musical</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">           
+                    
+            <div class="photo-frame">
+                        <img src="votre.jpg" alt="Photo de la chorale" class="chorale-photo" onerror="this.style.display='none'">
+                </div> 
+               <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-music"></i>
+                </div>            
+                <h1>LA GLOIRE DE DIEU </h1>
+                <p>Chargement du répertoire musical...</p>
+            </div>
+            <div class="loading-bar-container">
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                <div class="loading-percentage">0%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION PRINCIPALE -->
+    <div id="app" class="app-container" style="display: none;">
+        <!-- EN-TÊTE -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>LA GLOIRE DE DIEU</h1>
+                        <p>Répertoire Musical</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn mobile-menu-btn" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="header-btn contact-btn" onclick="showContactModal()">
+                        <i class="fas fa-envelope"></i>
+                        <span class="btn-text">Nous Contacter</span>
+                    </button>
+                    <button class="header-btn" onclick="showSection('themes')">
+                        <i class="fas fa-home"></i>
+                        <span class="btn-text">Accueil</span>
+                    </button>
+                </div>
+            </div>
+            <div class="search-container">
+    <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" id="global-search" placeholder="Rechercher une chanson, des paroles..." class="search-input">
+        <button class="search-clear" id="search-clear">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    <div id="search-results" class="search-results"></div>
+</div>
+        </header>
+
+        <!-- MENU MOBILE -->
+        <div id="mobile-menu" class="mobile-menu">
+            <button class="mobile-menu-item" onclick="showSection('themes'); toggleMobileMenu()">
+                <i class="fas fa-home"></i>
+                Accueil
+            </button>
+            <button class="mobile-menu-item" onclick="showContactModal(); toggleMobileMenu()">
+                <i class="fas fa-envelope"></i>
+                Nous Contacter
+            </button>
+        </div>
+
+        <!-- CONTENU PRINCIPAL -->
+        <main class="main-content">
+            <!-- SECTION THÈMES PRINCIPAUX -->
+            <section id="themes-section" class="content-section active">
+                <div class="section-header">
+                    <h2>Thèmes Principaux</h2>
+                    <p>Choisissez une catégorie de chants</p>
+                </div>
+                
+                <div class="themes-grid">
+                    <!-- THÈME 1 -->
+                    <div class="theme-card" onclick="showSubThemes('composition')">
+                        <div class="theme-icon">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                        <div class="theme-content">
+                            <h3>Chansons de Composition</h3>
+                            <p>Créations originales de la chorale</p>
+                            <div class="theme-stats">
+                                <span class="stat">24 chansons</span>
+                                <span class="stat-badge new">Nouveau</span>
+                            </div>
+                        </div>
+                        <div class="theme-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- THÈME 2 -->
+                    <div class="theme-card" onclick="showSubThemes('autres')">
+                        <div class="theme-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="theme-content">
+                            <h3>Autres Chansons</h3>
+                            <p>Reprises et chants traditionnels</p>
+                            <div class="theme-stats">
+                                <span class="stat">18 chansons</span>
+                                <span class="stat-badge popular">Populaire</span>
+                            </div>
+                        </div>
+                        <div class="theme-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION SOUS-THÈMES -->
+            <section id="subthemes-section" class="content-section">
+                <div class="section-header">
+                    <button class="back-btn" onclick="showSection('themes')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Retour aux thèmes</span>
+                    </button>
+                    <h2 id="subtheme-title">Sous-thèmes</h2>
+                    <p id="subtheme-description">Choisissez une catégorie</p>
+                </div>
+
+                <div class="subthemes-grid" id="subthemes-container">
+                    <!-- Les sous-thèmes seront chargés dynamiquement -->
+                </div>
+            </section>
+
+            <!-- SECTION TABLEAU DES CHANSONS -->
+            <section id="songs-section" class="content-section">
+                <div class="section-header">
+                    <button class="back-btn" onclick="showSection('subthemes')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Retour</span>
+                    </button>
+                    <h2 id="songs-title">Chansons</h2>
+                    <p id="songs-description">Liste des chants disponibles</p>
+                </div>
+
+                <div class="songs-table-container">
+                    <table class="songs-table">
+                        <thead>
+                            <tr>
+                                <th class="col-title">Titre de la Chanson</th>
+                                <th class="col-note">Note</th>
+                            </tr>
+                        </thead>
+                        <tbody id="songs-table-body">
+                            <!-- Les chansons seront chargées dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION DÉTAIL CHANSON -->
+            <section id="song-detail-section" class="content-section">
+                <div class="song-detail-container">
+                    <button class="back-btn" onclick="showSection('songs')">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Retour aux chansons</span>
+                    </button>
+                    
+                    <div class="song-header">
+                        <h2 id="detail-title">Titre de la chanson</h2>
+                        <div class="song-meta">
+                            <span id="detail-category" class="category-tag">Catégorie</span>
+                            <span id="detail-note" class="note-display">A+</span>
+                        </div>
+                    </div>
+
+                    <div class="song-content">
+                        <!-- VERSION ÉCRITE -->
+                        <div class="song-partition">
+                            <h3><i class="fas fa-file-lines"></i> Version Écrite</h3>
+                            <div class="lyrics-container">
+                                <pre id="detail-lyrics" class="song-lyrics">Paroles de la chanson...</pre>
+                            </div>
+                        </div>
+
+                        <!-- VERSION AUDIO -->
+                        <div class="song-audio">
+                            <h3><i class="fas fa-music"></i> Version Audio</h3>
+                            <div class="audio-player">
+                                <audio id="audio-player" controls>
+                                    Votre navigateur ne supporte pas l'élément audio.
+                                </audio>
+                                <div class="audio-info">
+                                    <span id="audio-duration">0:00</span>
+                                    <span id="audio-quality">Qualité: HD</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- NOTES MUSICALES -->
+                        <div class="song-notes">
+                            <h3><i class="fas fa-guitar"></i> Notes Musicales</h3>
+                            <div class="notes-display">
+                                <div id="detail-notes" class="musical-notes">
+                                    Do Ré Mi Fa Sol La Si Do
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- PIED DE PAGE -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 LA GLOIRE DE DIEU - Tous droits réservés</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL DE CONTACT -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nous Contacter</h3>
+                <button class="modal-close" onclick="closeContactModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Pour toute question ou suggestion, contactez-nous :</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Email</h4>
+                            <a href="mailto:benjaminbanyene6@gmail.com" class="contact-link">
+                                benjaminbanyene6@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">
+                            <i class="fab fa-facebook"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Facebook</h4>
+                            <a href="https://www.facebook.com/ben.banyene.octave" target="_blank" class="contact-link">
+                                Ben Banyene Octave
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-actions">
+                    <button class="btn-primary" onclick="sendEmail()">
+                        <i class="fas fa-paper-plane"></i>
+                        Envoyer un Email
+                    </button>
+                    <button class="btn-secondary" onclick="openFacebook()">
+                        <i class="fab fa-facebook"></i>
+                        Visiter Facebook
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="service-worker.js"></script>
+</body>
+</html>
